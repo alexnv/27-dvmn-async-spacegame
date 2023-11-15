@@ -1,4 +1,5 @@
 from itertools import cycle
+from pathlib import Path
 
 SPACE_KEY_CODE = 32
 LEFT_KEY_CODE = 260
@@ -7,13 +8,12 @@ UP_KEY_CODE = 259
 DOWN_KEY_CODE = 258
 
 
-def read_frames():
-    FRAME1 = open('frames/frame1.txt', 'r')
-    FRAME2 = open('frames/frame2.txt', 'r')
-    FRAMES = cycle([FRAME1.read(), FRAME2.read()])
-    FRAME1.close()
-    FRAME2.close()
-    return FRAMES
+def read_frames(folder='frames'):
+    spaceship_frames = []
+    for frame_filename in Path(folder).glob('frame*.txt'):
+        with open(frame_filename, 'r') as frame_file:
+            spaceship_frames.append(frame_file.read())
+    return spaceship_frames
 
 
 def read_controls(canvas):
