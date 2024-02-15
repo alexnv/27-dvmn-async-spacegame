@@ -99,19 +99,20 @@ def draw(canvas):
     ) for _ in range(randint(0, 300))]
     coroutines.extend([fire(canvas, x_max / 2, y_max / 2, rows_speed=-0.03, columns_speed=0),
                        animate_spaceship(canvas, x_max / 2, y_max / 2, spaceship_frames)])
+    canvas.border()
     while True:
-        canvas.border()
         curses.curs_set(False)
         for coroutine in coroutines.copy():
             try:
                 coroutine.send(None)
-                canvas.refresh()
+
             except StopIteration:
                 coroutines.remove(coroutine)
         if len(coroutines) == 0:
             break
 
         time.sleep(0.1)
+        canvas.refresh()
 
 
 if __name__ == '__main__':
